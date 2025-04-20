@@ -1,0 +1,48 @@
+@startuml
+
+class Film {
+  - titre : String <<obligatoire, unique>>
+  - genre : String
+  - duree : int <<>= 1>>
+}
+
+class Salle {
+  - nom : String <<unique>>
+  - nombrePlaces : int <<>= 1>>
+}
+
+class Seance {
+  - dateHeure : DateTime <<>= maintenant>>
+  - placesDisponibles : int <<0 à nombrePlaces>>
+  - film : Film
+  - salle : Salle
+}
+
+class Utilisateur {
+  - nom : String
+  - email : String <<unique, format valide>>
+  - motDePasse : String
+}
+
+class Reservation {
+  - statut : String
+  - nbPlaces : int <<>= 1>>
+  - seance : Seance
+  - utilisateur : Utilisateur
+}
+
+class Administrateur {
+  - identifiant : String
+  - motDePasse : String
+}
+
+' --- RELATIONS ---
+
+Film "1" o-- "0..*" Seance : est projeté
+Salle "1" o-- "0..*" Seance : accueille
+Seance "1" *-- "0..*" Reservation : concerne
+Utilisateur "1" o-- "0..*" Reservation : effectue
+Administrateur "1" -- "0..*" Film : gère
+Administrateur "1" -- "0..*" Seance : organise
+
+@enduml

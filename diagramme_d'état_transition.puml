@@ -1,0 +1,12 @@
+@startuml
+[*] --> Créée
+
+Créée --> EnAttentePaiement : Réserver
+EnAttentePaiement --> Confirmée : Paiement validé
+EnAttentePaiement --> Annulée : Annulation
+Créée --> Annulée : Annulation
+
+Confirmée --> [*]
+Annulée --> [*]
+
+@enduml
