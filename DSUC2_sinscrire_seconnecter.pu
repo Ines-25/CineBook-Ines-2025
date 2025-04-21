@@ -1,0 +1,30 @@
+@startuml
+
+actor Utilisateur
+participant "Page Authentification" as PageAuth
+participant "Gestionnaire Utilisateur" as GestUser
+participant "Base de Données" as BD
+
+== S'inscrire ==
+Utilisateur -> PageAuth : Cliquer sur "S'inscrire"
+PageAuth -> Utilisateur : Formulaire d'inscription
+Utilisateur -> PageAuth : Remplir infos (nom, email, mdp)
+PageAuth -> GestUser : Vérifier si email existe
+GestUser -> BD : Rechercher utilisateur par email
+BD --> GestUser : Email inexistant
+GestUser -> BD : Créer nouvel utilisateur
+BD --> GestUser : OK
+GestUser -> PageAuth : Inscription réussie
+PageAuth -> Utilisateur : Redirection vers accueil
+
+== Se connecter ==
+Utilisateur -> PageAuth : Cliquer sur "Se connecter"
+PageAuth -> Utilisateur : Formulaire de connexion
+Utilisateur -> PageAuth : Entrer email + mdp
+PageAuth -> GestUser : Vérifier identifiants
+GestUser -> BD : Chercher utilisateur
+BD --> GestUser : Infos utilisateur
+GestUser -> PageAuth : OK ou Erreur
+PageAuth -> Utilisateur : Connexion réussie ou Erreur
+
+@enduml

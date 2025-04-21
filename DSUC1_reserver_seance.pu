@@ -1,0 +1,31 @@
+@startuml
+
+actor Utilisateur
+participant "Interface" as IHM
+participant "CinemaManager" as CM
+participant "Base de données" as DB
+
+Utilisateur -> IHM : Se connecter
+IHM -> CM : Authentifier()
+CM -> DB : Vérifier identifiants
+DB --> CM : OK
+
+Utilisateur -> IHM : Choisir film et séance
+IHM -> CM : Vérifier disponibilité séance
+CM -> DB : Requête disponibilité
+DB --> CM : Dispo OK
+
+Utilisateur -> IHM : Saisir nb de places
+IHM -> CM : Vérifier nb places
+CM -> DB : Requête nb places
+DB --> CM : OK
+
+Utilisateur -> IHM : Payer
+IHM -> CM : Effectuer paiement
+CM -> DB : Enregistrer réservation
+CM -> DB : Générer billet
+DB --> CM : Confirmation
+
+IHM --> Utilisateur : Afficher confirmation + billet
+
+@enduml
